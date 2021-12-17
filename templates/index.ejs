@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= pageTitle %></title>
+		<meta name="author" content="<%= config.authorName %>">
+		<meta name="description" content="<%= config.metaDescription %>">
+		<!-- This specifies the favicon (little icon on the browser tab) -->
+		<link rel="icon" href="/images/favicon.png" type="image/x-icon"/>
+		<!-- This helps our site look consistent across devices -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<!-- Here's the link to our CSS stylesheet! -->
+		<% if (config.themeURL){ %>
+			<link href="<%= config.themeURL %>" rel="stylesheet" type="text/css" media="all">
+		<% } else { %>
+			<link href="/style/style.css" rel="stylesheet" type="text/css" media="all">
+		<% } %>
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">
+				<%- include('header', {config}); %>
+			</div>
+			<div id="content">
+				<%= content %>
+				<div id="recentpostlist"><%- include('recentPosts', {posts}); %></div>
+			</div>
+			<div id="footer">
+				<%- include('footer', {config}); %>
+			</div>
+		</div>
+	</body>
+</html>
