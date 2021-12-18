@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><%= pageTitle %></title>
+		<title><% if (locals.pageTitle){ _%>
+			<%= pageTitle %>
+		<% } else if (locals.config.blogName){ %>
+			<%= config.blogName %>
+		<%_ } %></title>
 		<meta name="author" content="<%= config.authorName %>">
 		<meta name="description" content="<%= config.metaDescription %>">
 		<!-- This specifies the favicon (little icon on the browser tab) -->
@@ -19,14 +23,23 @@
 	<body>
 		<div id="container">
 			<div id="header">
-				<%- include('header', {config}); %>
+				<%- include('header'); %>
 			</div>
 			<div id="content">
-				<%= content %>
-				<div id="recentpostlist"><%- include('recentPosts', {posts}); %></div>
+				<% if (locals.content) { %>
+					<% if (content.include){ %>
+						<% if (content.data){ %>
+							<%- include(content.include, content.data); %>
+						<% } else { %>
+							<%- include(content.include); %>
+						<% } %>
+					<% } else if (content.raw){ %>
+						<%= content.raw %>
+					<% } %>
+				<% } %>
 			</div>
 			<div id="footer">
-				<%- include('footer', {config}); %>
+				<%- include('footer'); %>
 			</div>
 		</div>
 	</body>

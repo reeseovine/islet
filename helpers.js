@@ -4,11 +4,10 @@ let postDateFormat = /\d{4}\-\d{2}\-\d{2}\-/;
 
 // Convert the post filename to readable post name. E.g. changes "2020-10-10-My-First-Post.html" to "My First Post"
 let getPostTitle = (filename) => {
-	let fileExtPos = filename.lastIndexOf('.');
 	if (postDateFormat.test(filename.slice(0, 11))){
-		return filename.slice(11, fileExtPos).replace(/-/g, ' ');
+		return filename.slice(11).replace(/-/g, ' ');
 	} else {
-		return filename.slice(0, fileExtPos).replace(/-/g, ' ');
+		return filename.replace(/-/g, ' ');
 	}
 }
 
@@ -41,11 +40,14 @@ let getPostList = () => {
 	let files = fs.readdirSync('./posts');
 	let posts = [];
 	for (var filename of files){
+		let fileExtPos = filename.lastIndexOf('.');
+		filename = filename.slice(0, fileExtPos);
+
 		posts.push({
 			filename,
 			title: getPostTitle(filename),
 			date: filename.slice(0, 10)
-		})
+		});
 	}
 	return posts;
 }
