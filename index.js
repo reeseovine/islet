@@ -1,5 +1,4 @@
 const fs = require('fs');
-const marked = require('marked');
 
 const config = require('./config'); // User-defined config variables. You should edit this file first!
 const helpers = require('./helpers');
@@ -35,12 +34,7 @@ app.get('/posts/:filename', (req, res) => {
 			break;
 		}
 	}
-
-	// load the file contents into a variable. parse markdown if needed.
-	let contents = fs.readFileSync('./posts/' + filename).toString();
-	if (filename.slice(-2) === 'md'){
-		contents = marked.parse(contents);
-	}
+	let contents = helpers.getPostContents(filename);
 
 	// grab the title, date, and index from the posts list
 	let posts = helpers.getPostList();
@@ -53,6 +47,12 @@ app.get('/posts/:filename', (req, res) => {
 	}
 
 	res.render('index', {config, posts, content: {include: 'post', data: postData}});
+});
+
+// RSS feed
+app.get('/feed.rss', (req, res) => {
+	res.set('Content-Type', 'application/xml');
+	res.render('feed', {config, posts: helpers.getPostListExtended()});
 });
 
 // 404 not found!

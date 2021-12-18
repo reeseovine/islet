@@ -1,4 +1,5 @@
 const fs = require('fs');
+const marked = require('marked');
 
 let postDateFormat = /^\d{4}\-\d{2}\-\d{2}\-?/;
 
@@ -52,8 +53,38 @@ let getPostList = () => {
 	return posts;
 }
 
+// Grab the file contents and parse markdown if needed.
+let getPostContents = (file) => {
+	let contents = fs.readFileSync('./posts/' + file).toString();
+	if (file.slice(-3) === '.md'){
+		contents = marked.parse(contents);
+	}
+
+	return contents;
+}
+
+let getPostListExtended = () => {
+	let files = fs.readdirSync('./posts').reverse();
+	let posts = [];
+	for (var file of files){
+		let fileExtPos = file.lastIndexOf('.');
+		filename = file.slice(0, fileExtPos);
+
+		posts.push({
+			filename,
+			title: getPostTitle(filename),
+			date: filename.slice(0, 10),
+			date_fmt: getPostDate(filename),
+			body: getPostContents(file)
+		});
+	}
+	return posts;
+}
+
 module.exports = {
 	getPostTitle,
 	getPostDate,
-	getPostList
+	getPostList,
+	getPostContents,
+	getPostListExtended,
 }

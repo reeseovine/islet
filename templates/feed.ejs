@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
+
+<channel>
+	<title><%= config.blogName %></title>
+
+	<% if (config.blogURL && config.blogURL.length > 0){ -%>
+		<atom:link href="<%= config.blogURL %>/feed.rss" rel="self" type="application/rss+xml" />
+		<link><%= config.blogURL %></link>
+	<% } -%>
+
+	<description><%= config.metaDescription %></description>
+	<language><%= config.language %></language>
+	<pubDate><%= new Date(posts[0].date).toUTCString() %></pubDate>
+
+	<% posts.forEach((post) => { %>
+		<item>
+			<title><%= post.title %></title>
+			<link><%= config.blogURL %>/posts/<%= post.filename %></link>
+			<guid isPermaLink="false"><%= post.filename %></guid>
+			<pubDate><%= new Date(post.date).toUTCString() %></pubDate>
+			<description><%= post.body.replace(/(href|src)=(['"])\.\./g, `$1=$2${config.blogURL}`).replace(/(href|src)=(['"])\./g, `$1=$2${config.blogURL}/posts`) %></description>
+		</item>
+	<% }); %>
+
+	</channel>
+</rss>
