@@ -1,11 +1,16 @@
 # Zonelet (name change pending) starter pack
 
-Work-in-progress fork of [Zonelets](https://zonelets.net/) by Marina Kittaka.
+Express.js server-based fork of [Zonelets](https://zonelets.net/) by Marina Kittaka.
 
-All themes from the zonelet theme pack v1.1 are included (license CC0).
+All themes from the zonelet theme pack v1.1 are included (license CC0). This fork aims to be 100% compatible with themes made for Zonelets!
 
+## Usage instructions
+*Documentation coming soon...*
 
-# License
+## To do
+- Custom post titles with special characters support
+
+## License
 
 ```
 Released under MIT License

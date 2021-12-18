@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= config.language %>">
 	<head>
 		<title><% if (locals.pageTitle){ _%>
 			<%= pageTitle %>
@@ -13,6 +13,7 @@
 		<!-- This helps our site look consistent across devices -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
+		<meta http-equiv=”content-language” content=”<%= config.language %>”/>
 		<!-- Here's the link to our CSS stylesheet! -->
 		<% if (config.themeURL){ %>
 			<link href="<%= config.themeURL %>" rel="stylesheet" type="text/css" media="all">
@@ -20,7 +21,9 @@
 			<link href="/style/style.css" rel="stylesheet" type="text/css" media="all">
 		<% } %>
 	</head>
-	<body>
+	<body <% if (config.backgroundImage && config.backgroundImage.length > 0){ -%>
+		style="background-image: url('<%= config.backgroundImage %>') !important;"
+	<% } -%>>
 		<div id="container">
 			<div id="header">
 				<%- include('header'); %>

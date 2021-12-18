@@ -17,22 +17,27 @@ app.get(['/', '/index.html'], (req, res) => {
 	res.render('index', {config, posts: helpers.getPostList(), pageTitle: 'Home', content: {include: 'home'}});
 });
 app.get(['/archive', '/archive.html'], (req, res) => {
-	res.render('index', {config, posts: helpers.getPostList(), content: {include: 'archive'}});
+	res.render('index', {config, posts: helpers.getPostList(), pageTitle: 'Archive', content: {include: 'archive'}});
 });
 app.get(['/about', '/about.html'], (req, res) => {
-	res.render('index', {config, posts: helpers.getPostList(), content: {include: 'about'}});
+	res.render('index', {config, posts: helpers.getPostList(), pageTitle: 'About', content: {include: 'about'}});
 });
 
 // A blog post
 app.get('/posts/:filename', (req, res) => {
 	// find the file that is being referred to. html takes precedence over md.
 	let postFiles = fs.readdirSync('./posts');
+	let fileExtPos = req.params.filename.lastIndexOf('.');
 	let filename;
 	for (var file of postFiles){
-		if (file.slice(0, req.params.filename.length) === req.params.filename){
+		if (file.slice(0, fileExtPos) === req.params.filename){
 			filename = file;
 			break;
 		}
+	}
+	if (!filename){
+		res.status(404).render('index', {config, pageTitle: 'Not found', content: {include: 'not_found'}});
+		return;
 	}
 	let contents = helpers.getPostContents(filename);
 
@@ -46,7 +51,7 @@ app.get('/posts/:filename', (req, res) => {
 		}
 	}
 
-	res.render('index', {config, posts, content: {include: 'post', data: postData}});
+	res.render('index', {config, posts, pageTitle: postData.title, content: {include: 'post', data: postData}});
 });
 
 // RSS feed
@@ -57,7 +62,7 @@ app.get('/feed.rss', (req, res) => {
 
 // 404 not found!
 app.get('*', (req, res) => {
-	res.render('index', {config, posts: helpers.getPostList(), content: {include: 'not_found'}});
+	res.status(404).render('index', {config, pageTitle: 'Not found', content: {include: 'not_found'}});
 });
 
 

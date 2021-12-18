@@ -47,7 +47,8 @@ let getPostList = () => {
 		posts.push({
 			filename,
 			title: getPostTitle(filename),
-			date: getPostDate(filename)
+			date: filename.slice(0, 10),
+			date_fmt: getPostDate(filename)
 		});
 	}
 	return posts;
