@@ -1,10 +1,10 @@
 const fs = require('fs');
 
-let postDateFormat = /\d{4}\-\d{2}\-\d{2}\-/;
+let postDateFormat = /^\d{4}\-\d{2}\-\d{2}\-?/;
 
 // Convert the post filename to readable post name. E.g. changes "2020-10-10-My-First-Post.html" to "My First Post"
 let getPostTitle = (filename) => {
-	if (postDateFormat.test(filename.slice(0, 11))){
+	if (postDateFormat.test(filename.slice(0, 10))){
 		return filename.slice(11).replace(/-/g, ' ');
 	} else {
 		return filename.replace(/-/g, ' ');
@@ -13,7 +13,7 @@ let getPostTitle = (filename) => {
 
 // Generate the "nice to read" version of date
 let getPostDate = (filename) => {
-	if (postDateFormat.test(filename.slice(0, 11))){
+	if (postDateFormat.test(filename.slice(0, 10))){
 		let monthSlice = filename.slice(5, 7);
 		let month = "";
 		switch (monthSlice){
@@ -37,7 +37,7 @@ let getPostDate = (filename) => {
 }
 
 let getPostList = () => {
-	let files = fs.readdirSync('./posts');
+	let files = fs.readdirSync('./posts').reverse();
 	let posts = [];
 	for (var filename of files){
 		let fileExtPos = filename.lastIndexOf('.');
@@ -46,7 +46,7 @@ let getPostList = () => {
 		posts.push({
 			filename,
 			title: getPostTitle(filename),
-			date: filename.slice(0, 10)
+			date: getPostDate(filename)
 		});
 	}
 	return posts;

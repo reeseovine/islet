@@ -1,6 +1,16 @@
-<h1 id="postTitleH1"></h1>
-<h4 id="postDate"></h4>
+<h1 id="postTitleH1"><%= content.data.title %></h1>
+<h4 id="postDate"><%= content.data.date %></h4>
 
+<%- content.data.body %>
 
-
-<div id="nextprev"></div>
+<div id="nextprev">
+	<% if (posts.length <= 1){ %>
+		<a href="/">Home</a>
+	<% } else if (content.data.index === 0){ %>
+		<a href="/">Home</a> | <a href="/posts/<%= posts[content.data.index + 1].filename %>">Previous Post &raquo;</a>
+	<% } else if (content.data.index === posts.length - 1){ %>
+		<a href="/posts/<%= posts[content.data.index - 1].filename %>">&laquo; Next Post</a> | <a href="/">Home</a>
+	<% } else if (0 < content.data.index && content.data.index < posts.length - 1){ %>
+		<a href="/posts/<%= posts[content.data.index - 1].filename %>">&laquo; Next Post</a> | <a href="/">Home</a> | <a href="/posts/<%= posts[content.data.index + 1].filename %>">Previous Post &raquo;</a>
+	<% } %>
+</div>

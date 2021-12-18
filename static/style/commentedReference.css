@@ -1,0 +1,235 @@
+/* CSS is how you can add style to your website, such as colors, fonts, and positioning of your
+   HTML content. To learn how to do something, just try searching Google for questions like
+   "how to change link color." */
+
+/*every HTML page has a body tag (I think? lol). It contains 
+ALL the content and there can only be one body tag.*/
+body {
+  background-color: #0245d7;
+  background-image: url('../images/image.jpg');
+	background-position: top;
+	background-repeat: repeat-x;
+	background-attachment: fixed;
+  font-size: 18px;
+/*Different computers have different fonts installed.
+The concept of a "font-family" is that you put the font
+you want to use first. But if the user doesn't have it,
+it tries the next font, then the next font, and so on.*/
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+p {
+  line-height: 1.6em; /*I find the default HTML line-height tends to be a bit claustrophobic for main text. So this is wider.*/
+}
+#content li {
+  line-height: 1.6em;
+}
+/*What does "1.6em" mean? "em" units are multiples of the font size
+(of the parent element). See how we set the font-size to 18px in the
+body tag? Well, that means for elements in the body 1em = 18px. 
+2em = 2*18px = 36px. It's nice to use em for anything that should
+feel proportional in size to the text, because users can change
+the font scaling through their browser.
+*/
+
+em {
+/*Haha this is a funny coincidence! The em tag here is NOT related
+to the em units that we just talked about. Here <em> means emphasis,
+and by default it is styled as italic text.*/
+  color: #1f1f1f;
+  background-color: #ffd8ed; 
+}
+
+/*max-width: 100%; and height: auto; ensure that the image scales
+to fit the container but doesn't scale bigger than it's true dimensions.*/
+img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+/*when we say .right, the "." in front means that "right" is a class.
+if you go to the html and say <img class="right"> then this style
+will apply to that image! class names can be anything! We could have
+called this .rightAligned or whatever.*/
+.right {
+  float: right;
+  margin-left: 1em;
+}
+.left {
+  float: left;
+  margin-right: 1em;
+}
+/*Layout in CSS can get kinda weird and unintuitive. There's no simple
+"center image" style. A good way to do it is to set display: block; and
+then set the left and right margins both to auto.*/
+.center {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+/*Here's a "responsive design" thing! The media query specifies to only
+run the nested block of code if the screen width is greater than 600px.
+So, if the screen is big enough, the small class will make images take up
+no more than 60% of the content area. But if the window is small, then
+they will just take up the whole width to keep them from being too small.*/
+@media only screen and (min-width: 600px) {
+  .small {
+    max-width: 60%;
+    height: auto;
+  }
+}
+/*The is the style for image captions: smaller and italic with no top margin
+so it's closer to the image above it than a normal <p> class would be*/
+.caption {
+  margin-top: 0;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+/*<a> tag is for links! I just used the default link colors for most of the
+Zonelets themes. But I added a bit of highlighting when you hover because
+it feels nice.*/
+a:hover { 
+  background-color: #c9f1fe;
+}
+
+/*These are headings. Generally they're bigger bolder text used for titling sections
+of your writing. There are technically at least 5 but I would rarely used more
+than the first 3. Here i'm styling them all at once as you can see, by separating
+them with commas! These come with default different font sizes already set, so
+I'm just setting their color and font-family.*/
+h1, h2, h3, h4, h5 {
+  color: #3c445f;
+  font-family: "Palatino Linotype", Palatino, Baskerville, "Baskerville Old Face", sans-serif;
+}
+
+/*#CONTAINER is the rectangle that contains everything but the background!
+Remember how "." means a class? Well "#" means an id. An id is like a class
+in that it sorta "tags" an element so that you can style it. BUT you can only
+have 1 element with a given id. id's are unique, classes are groups.*/
+#container {
+/*Remember how earlier we used "margin-right: auto" and "margin-left: auto" when
+styling the .center class? Here we just say "margin: 3em auto" which is shorthand
+for saying that the top/bottom margin is 3em, and the left/right margin is auto.*/
+  margin: 3em auto; 
+  width: 90%;
+	max-width: 700px;
+	background-color: white;
+  color: #555; 
+/*One weird thing about CSS is that there are both "outlines" and "borders" and they
+look similar and have similar properties. What's the difference? Basically borders
+take up space in your design (a really thick border would "push" other content away)
+Whereas outlines are purely decorational and just sorta go on top.*/
+  outline-color: #CCC;
+/*As you can probably tell from looking at the Zonelets themes I LOVE the outline and
+border style "ridge". It's mostly fallen out of style as looking naive and old, but
+I think it's time for "ridge" to make a comeback!!!*/
+  outline-style: ridge;
+  outline-width: 4px;
+  outline-offset: 0;
+}
+
+/*#content is the main contents of the page. It goes below the header and above the footer*/
+#content {
+  padding: 10px 5% 20px 5%;
+}
+
+
+/*HEADER STYLE*/
+#header {
+  position: relative; /*NOTE: See the #header:after styles below about the floating zonelets logo!*/
+  background-color: #3c445f;
+  padding: 0 5%;
+  border-color: #CCC;
+  border-style: ridge;
+  border-width: 0 0 4px 0;
+}
+/*In many websites, the navigation links at the top are actually list items! By default,
+list items look like bullet points or numbers. This is one of the best examples of the
+power and meaning of CSS. Conceptually the navigation links ARE a list, but we want them
+to LOOK totally different. So we remove the bullet points with "list-style-type: none;" 
+and use "display inline-block" to make them all try to sit on the same horizontal line if
+they can, only wrapping to a new line if there's no room.*/
+#header ul {
+  list-style-type: none;
+  padding: 0.5em 0;
+  margin: 0;
+}
+#header li {
+  font-size: 1.2em;
+  display: inline-block;
+  margin-right: 1.5em;
+  margin-bottom: 0.2em;
+  margin-top: 0.2em;
+}
+/*What's going on? We styled "#header", then we styled "#header li", now we're styling
+"#header li a"? What does it all mean?? Well, we made the header background color kinda
+dark, so we want to make the header navigation links color white! But if we just set
+"a {color: white}" then ALL the links would be white. That's not what we want! "#header li a"
+means "I want to style the links IN a list item IN the header, specifically!" Because we are
+being more specific, it will overwrite styles we apply to just "a" and it will only affect
+this specific subsection of links*/
+#header li a {
+  color: white;
+  font-family: "Palatino Linotype", Palatino, Baskerville, "Baskerville Old Face", serif;
+  text-decoration: none;
+  background-color: inherit;
+}
+#header li a:hover {
+  text-decoration: underline;
+}
+
+/*Are you curious how I did the little floating Zonelets Logo in the Zonelets.net
+home page? It's with this style. Kind of advanced so I won't explain this fully.
+But basically we added an element that didn't even exist in the html by using ":after"
+NOTE: in order to use position: absolute (which is misleadingly named) we must have
+a positioned ancestor, that's why we set "position: relative" on header.
+*/
+#header:after {
+    position: absolute;
+    right: 10px;
+    top: -10px;
+    content: '';
+    background-image: url('/images/zoneletslogo.png');
+    background-repeat: no-repeat;
+    pointer-events: none;
+    width: 48px;
+    height: 48px;
+    overflow:hidden;
+}
+
+/*POST LIST STYLE*/
+#postlistdiv ul {
+  font-size: 1.2em;
+  padding: 0;
+  list-style-type: none;
+}
+#recentpostlistdiv ul {
+  font-size: 1.2em;
+  padding: 0;
+  list-style-type: none;
+}
+.moreposts {
+  font-size: 0.8em;
+  margin-top: 0.2em;
+}
+
+/*NEXT AND PREVIOUS LINKS STYLE*/
+#nextprev {
+  text-align: center;
+  margin-top: 1.4em;
+}
+
+/*DISQUS STYLE*/
+#disqus_thread {
+  margin-top: 1.6em;
+}
+
+/*FOOTER STYLE*/
+#footer {
+  font-size: 0.8em;
+  padding: 0 5% 10px 5%;
+}

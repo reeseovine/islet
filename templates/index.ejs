@@ -28,13 +28,9 @@
 			<div id="content">
 				<% if (locals.content) { %>
 					<% if (content.include){ %>
-						<% if (content.data){ %>
-							<%- include(content.include, content.data); %>
-						<% } else { %>
-							<%- include(content.include); %>
-						<% } %>
+						<%- include(content.include); %>
 					<% } else if (content.raw){ %>
-						<%= content.raw %>
+						<%- content.raw %>
 					<% } %>
 				<% } %>
 			</div>

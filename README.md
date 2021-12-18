@@ -2,6 +2,8 @@
 
 Work-in-progress fork of [Zonelets](https://zonelets.net/) by Marina Kittaka.
 
+All themes from the zonelet theme pack v1.1 are included (license CC0).
+
 
 # License
 

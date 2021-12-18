@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require('path');
+const marked = require('marked');
 
 const config = require('./config'); // User-defined config variables. You should edit this file first!
 const helpers = require('./helpers');
@@ -26,13 +26,33 @@ app.get(['/about', '/about.html'], (req, res) => {
 
 // A blog post
 app.get('/posts/:filename', (req, res) => {
-	// steps:
 	// find the file that is being referred to. html takes precedence over md.
-	// load this file into a variable. parse markdown if needed.
-	// parse the title and date.
+	let postFiles = fs.readdirSync('./posts');
+	let filename;
+	for (var file of postFiles){
+		if (file.slice(0, req.params.filename.length) === req.params.filename){
+			filename = file;
+			break;
+		}
+	}
 
-	// req.params.filename
-	res.render('index', {config, posts: helpers.getPostList(), content: {include: 'post', data: {}}});
+	// load the file contents into a variable. parse markdown if needed.
+	let contents = fs.readFileSync('./posts/' + filename).toString();
+	if (filename.slice(-2) === 'md'){
+		contents = marked.parse(contents);
+	}
+
+	// grab the title, date, and index from the posts list
+	let posts = helpers.getPostList();
+	let postData;
+	for (var i=0, p; p=posts[i]; i++){
+		if (p.filename === req.params.filename){
+			postData = Object.assign(p, {index: i, body: contents});
+			break;
+		}
+	}
+
+	res.render('index', {config, posts, content: {include: 'post', data: postData}});
 });
 
 // 404 not found!
