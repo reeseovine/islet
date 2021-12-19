@@ -61,7 +61,14 @@ let getPostContents = (file) => {
 		contents = marked.parse(contents);
 	}
 
-	return contents;
+	let firstLine = contents.split('\n')[0];
+	let title;
+	if (/^<title>.*<\/title>$/.test(firstLine)){
+		title = firstLine.replace(/^<title>(.*)<\/title>$/, '$1');
+		contents = contents.split('\n').slice(1).join('\n');
+	}
+
+	return {body: contents, title};
 }
 
 let getPostListExtended = () => {

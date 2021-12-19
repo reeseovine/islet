@@ -3,6 +3,14 @@ const fs = require('fs');
 const config = require('./config'); // User-defined config variables. You should edit this file first!
 const helpers = require('./helpers');
 
+const NodeCache = require('node-cache');
+const cache = new NodeCache();
+const chokidar = require('chokidar');
+let postWatcher = chokidar.watch('./posts/*').on('all', (event, path) => {
+	cache.set('posts', helpers.getPostList());
+	cache.set('posts/'+path.slice(6, path.lastIndexOf('.')), helpers.getPostContents(path.slice(6)));
+});
+
 const express = require('express');
 const app = express();
 
@@ -14,39 +22,44 @@ app.use('/', express.static('static'));
 
 // Main pages
 app.get(['/', '/index.html'], (req, res) => {
-	res.render('index', {config, posts: helpers.getPostList(), pageTitle: 'Home', content: {include: 'home'}});
+	res.render('index', {config, posts: cache.get('posts'), pageTitle: 'Home', content: {include: 'home'}});
 });
 app.get(['/archive', '/archive.html'], (req, res) => {
-	res.render('index', {config, posts: helpers.getPostList(), pageTitle: 'Archive', content: {include: 'archive'}});
+	res.render('index', {config, posts: cache.get('posts'), pageTitle: 'Archive', content: {include: 'archive'}});
 });
 app.get(['/about', '/about.html'], (req, res) => {
-	res.render('index', {config, posts: helpers.getPostList(), pageTitle: 'About', content: {include: 'about'}});
+	res.render('index', {config, posts: cache.get('posts'), pageTitle: 'About', content: {include: 'about'}});
 });
 
 // A blog post
 app.get('/posts/:filename', (req, res) => {
-	// find the file that is being referred to. html takes precedence over md.
-	let postFiles = fs.readdirSync('./posts');
-	let fileExtPos = req.params.filename.lastIndexOf('.');
-	let filename;
-	for (var file of postFiles){
-		if (file.slice(0, fileExtPos) === req.params.filename){
-			filename = file;
-			break;
+	let posts = cache.get('posts');
+	let contents = cache.get('posts/'+req.params.filename);
+	if (!contents){
+		// find the file that is being referred to. html takes precedence over md.
+		let postFiles = fs.readdirSync('./posts');
+		let filename;
+		for (var file of postFiles){
+			let fileExtPos = file.lastIndexOf('.');
+			if (file.slice(0, fileExtPos) === req.params.filename){
+				filename = file;
+				break;
+			}
 		}
+		if (!filename){
+			// That blog post doesn't exist!
+			res.status(404).render('index', {config, posts, pageTitle: 'Not found', content: {include: 'not_found'}});
+			return;
+		}
+		contents = helpers.getPostContents(filename);
+		cache.set('posts/'+req.params.filename, contents);
 	}
-	if (!filename){
-		res.status(404).render('index', {config, pageTitle: 'Not found', content: {include: 'not_found'}});
-		return;
-	}
-	let contents = helpers.getPostContents(filename);
 
 	// grab the title, date, and index from the posts list
-	let posts = helpers.getPostList();
 	let postData;
-	for (var i=0, p; p=posts[i]; i++){
-		if (p.filename === req.params.filename){
-			postData = Object.assign(p, {index: i, body: contents});
+	for (var i=0, post; post=posts[i]; i++){
+		if (post.filename === req.params.filename){
+			postData = Object.assign(post, {index: i, title: (contents.title ? contents.title : post.title), body: contents.body});
 			break;
 		}
 	}
@@ -62,7 +75,7 @@ app.get('/feed.rss', (req, res) => {
 
 // 404 not found!
 app.get('*', (req, res) => {
-	res.status(404).render('index', {config, pageTitle: 'Not found', content: {include: 'not_found'}});
+	res.status(404).render('index', {config, posts: cache.get('posts'), pageTitle: 'Not found', content: {include: 'not_found'}});
 });
 
 
