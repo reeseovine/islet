@@ -5,10 +5,17 @@ let postDateFormat = /^\d{4}\-\d{2}\-\d{2}\-?/;
 
 // Convert the post filename to readable post name. E.g. changes "2020-10-10-My-First-Post.html" to "My First Post"
 let getPostTitle = (filename) => {
-	if (postDateFormat.test(filename.slice(0, 10))){
-		return filename.slice(11).replace(/-/g, ' ');
+	let firstLine = fs.readFileSync('./posts/' + filename).toString().split('\n')[0];
+	let title;
+	if (/^<title>.*<\/title>$/.test(firstLine)){
+		return firstLine.replace(/^<title>(.*)<\/title>$/, '$1');
 	} else {
-		return filename.replace(/-/g, ' ');
+		let fileExtPos = filename.lastIndexOf('.');
+		if (postDateFormat.test(filename.slice(0, 10))){
+			return filename.slice(11).replace(/-/g, ' ');
+		} else {
+			return filename.replace(/-/g, ' ');
+		}
 	}
 }
 
@@ -30,7 +37,9 @@ let getPostDate = (filename) => {
 			case "10": month = "Oct"; break;
 			case "11": month = "Nov"; break;
 			case "12": month = "Dec"; break;
+			default: console.warn(`"${month}" in "posts/${filename}" is not a valid month! Please double-check so that it will display properly.`);
 		}
+
 		return filename.slice(8, 10) + " " + month + ", " + filename.slice(0,4);
 	} else {
 		return "";
@@ -40,15 +49,14 @@ let getPostDate = (filename) => {
 let getPostList = () => {
 	let files = fs.readdirSync('./posts').reverse();
 	let posts = [];
-	for (var filename of files){
-		let fileExtPos = filename.lastIndexOf('.');
-		filename = filename.slice(0, fileExtPos);
+	for (var file of files){
+		let fileExtPos = file.lastIndexOf('.');
 
 		posts.push({
-			filename,
-			title: getPostTitle(filename),
-			date: filename.slice(0, 10),
-			date_fmt: getPostDate(filename)
+			filename: file.slice(0, fileExtPos),
+			title: getPostTitle(file),
+			date: file.slice(0, 10),
+			date_fmt: getPostDate(file)
 		});
 	}
 	return posts;
@@ -76,13 +84,11 @@ let getPostListExtended = () => {
 	let posts = [];
 	for (var file of files){
 		let fileExtPos = file.lastIndexOf('.');
-		filename = file.slice(0, fileExtPos);
-
 		posts.push({
-			filename,
-			title: getPostTitle(filename),
+			filename: file.slice(0, fileExtPos),
+			title: getPostTitle(file),
 			date: filename.slice(0, 10),
-			date_fmt: getPostDate(filename),
+			date_fmt: getPostDate(file),
 			body: getPostContents(file)
 		});
 	}
