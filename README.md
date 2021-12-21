@@ -1,25 +1,23 @@
-# Zonelet (name change pending) starter pack
+# islet 🌴
 
-Express.js server-based fork of [Zonelets](https://zonelets.net/) by Marina Kittaka.
+Tiny blogging server. Express.js-based fork of [Zonelets](https://zonelets.net/).
 
-All themes from the zonelet theme pack v1.1 are included (license CC0). This fork aims to be 100% compatible with themes made for Zonelets!
+All themes from the Zonelet theme pack v1.1 are included (license CC0). Islet aims to be 100% compatible with themes made for Zonelets!
 
 ## Usage instructions
 *Documentation coming soon...*
 
-## To do
-- Custom post titles with special characters support
+## Credits
 
-## License
+Released under the MIT License. See [`LICENSE`](LICENSE).
 
-```
-Released under MIT License
+Islet is built upon the work of [Zonelets](https://zonelets.net/) by [Marina Kittaka](https://twitter.com/even_kei). Zonelets is available on itch.io for free with an MIT license. Marina has also created several themes which are included here in full and without modification. These themes are available under the Creative Commons Zero license, which is equivalent to public domain.
 
-Copyright 2021 Reese Sapphire
+I'd also like to thank the authors of the Javascript modules used by this project, including:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+- [Express](https://www.npmjs.com/package/express) by [many contributors](https://expressjs.com/en/resources/community.html)
+- [EJS](https://www.npmjs.com/package/ejs) by mde
+- [Marked](https://www.npmjs.com/package/marked) by [these fine people](https://marked.js.org/authors)
+- [Chokidar](https://www.npmjs.com/package/chokidar) by paulmillr
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```
+The full list can be found in [`package.json`](package.json)!

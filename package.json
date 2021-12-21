@@ -1,9 +1,10 @@
 {
-  "name": "zonelet",
+  "name": "islet",
   "version": "1.0.0",
-  "description": "tiny self-hosted blogging platform",
+  "description": "tiny blogging server",
   "scripts": {
     "dev": "nodemon index.js",
+    "build": "echo 'Static build feature coming soon...'",
     "start": "node index.js"
   },
   "author": "Reese Sapphire <reese@ovine.xyz>",
