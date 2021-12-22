@@ -3,7 +3,7 @@
 	<ul>
 		<% for (let i = 0; i < posts.length && i < config.recentPostsCutoff; i++){ %>
 			<% let post = posts[i]; %>
-			<li><a href="/posts/<%= post.filename %>"><%= post.date %><%= (post.date.length > 0) ? " \u00BB " : "" %><%= post.title %></a></li>
+			<li><a href="/posts/<%= post.slug %>"><%= post.date %><%= (post.date.length > 0) ? " \u00BB " : "" %><%= post.title %></a></li>
 		<% } %>
 		<% if (posts.length > config.recentPostsCutoff){ %>
 			<li class="moreposts"><a href="/archive">&raquo; more posts</a></li>

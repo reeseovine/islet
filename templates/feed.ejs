@@ -29,8 +29,8 @@
 	<% posts.forEach((post) => { %>
 		<item>
 			<title><%= post.title %></title>
-			<link><%= config.blogURL %>/posts/<%= post.filename %></link>
-			<guid isPermaLink="false"><%= post.filename %></guid>
+			<link><%= config.blogURL %>/posts/<%= post.slug %></link>
+			<guid isPermaLink="false"><%= post.slug %></guid>
 			<pubDate><%= new Date(post.date).toUTCString() %></pubDate>
 			<description><%= post.body.replace(/(href|src)=(['"])\.\./g, `$1=$2${config.blogURL}`).replace(/(href|src)=(['"])\./g, `$1=$2${config.blogURL}/posts`) %></description>
 		</item>

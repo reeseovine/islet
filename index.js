@@ -1,14 +1,18 @@
-const fs = require('fs');
+const config = require('./config.js'); // User-defined config variables. You should edit this file first!
+const helpers = require('./helpers.js');
 
-const config = require('./config'); // User-defined config variables. You should edit this file first!
-const helpers = require('./helpers');
+const SimpleCache = require('./cache.js');
+const cache = new SimpleCache();
 
-const NodeCache = require('node-cache');
-const cache = new NodeCache();
 const chokidar = require('chokidar');
-let postWatcher = chokidar.watch('./posts/*').on('all', (event, path) => {
+// Update posts list and remove post contents from cache as changes are reported.
+let postWatcher = chokidar.watch('posts/*', {ignoreInitial: true}).on('all', (event, path) => {
+	cache.remove(path);
 	cache.set('posts', helpers.getPostList());
-	cache.set('posts/'+path.slice(6, path.lastIndexOf('.')), helpers.getPostContents(path.slice(6)));
+});
+// Cache post list on startup
+postWatcher.on('ready', () => {
+	cache.set('posts', helpers.getPostList());
 });
 
 const express = require('express');
@@ -32,45 +36,39 @@ app.get(['/about', '/about.html'], (req, res) => {
 });
 
 // A blog post
-app.get('/posts/:filename', (req, res) => {
+app.get('/posts/:slug', (req, res) => {
+	// Check if that post exists and determine its position within the list of posts.
 	let posts = cache.get('posts');
-	let contents = cache.get('posts/'+req.params.filename);
-	if (!contents){
-		// find the file that is being referred to. html takes precedence over md.
-		let postFiles = fs.readdirSync('./posts');
-		let filename;
-		for (var file of postFiles){
-			let fileExtPos = file.lastIndexOf('.');
-			if (file.slice(0, fileExtPos) === req.params.filename){
-				filename = file;
-				break;
-			}
-		}
-		if (!filename){
-			// That blog post doesn't exist!
-			res.status(404).render('index', {config, posts, pageTitle: 'Not found', content: {include: 'not_found'}});
-			return;
-		}
-		contents = helpers.getPostContents(filename);
-		cache.set('posts/'+req.params.filename, contents);
-	}
-
-	// grab the title, date, and index from the posts list
-	let postData;
-	for (var i=0, post; post=posts[i]; i++){
-		if (post.filename === req.params.filename){
-			postData = Object.assign(post, {index: i, title: (contents.title ? contents.title : post.title), body: contents.body});
+	let index = -1;
+	for (var i=0; i < posts.length; i++){
+		if (posts[i].slug === req.params.slug){
+			index = i;
 			break;
 		}
 	}
+	if (index < 0){
+		res.status(404).render('index', {config, posts, pageTitle: 'Not found', content: {include: 'not_found'}});
+		return;
+	}
 
+	// Fetch the post body from cache.
+	let body = helpers.cachePostContents(posts[index].file, cache);
+	// Make an object that includes the post's metadata, index, and body, then render the page with it.
+	let postData = Object.assign(posts[index], {index, body});
 	res.render('index', {config, posts, pageTitle: postData.title, content: {include: 'post', data: postData}});
 });
 
 // RSS feed
 app.get('/feed.rss', (req, res) => {
+	// Do a similar thing as we do above, but for all of them this time.
+	let posts = cache.get('posts');
+	let postsExtended = [];
+	for (var post of posts){
+		postsExtended.push(Object.assign(post, {body: helpers.cachePostContents(post.file, cache)}));
+	}
+
 	res.set('Content-Type', 'application/xml');
-	res.render('feed', {config, posts: helpers.getPostListExtended()});
+	res.render('feed', {config, posts: postsExtended});
 });
 
 // 404 not found!
