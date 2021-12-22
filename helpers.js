@@ -90,10 +90,22 @@ let getPostList = () => {
 	return posts;
 }
 
+let getIndex = (slug, posts) => {
+	let index = -1;
+	for (var i=0; i < posts.length; i++){
+		if (posts[i].slug === slug){
+			index = i;
+			break;
+		}
+	}
+	return index;
+}
+
 module.exports = {
 	getPostDate,
 	getPostTitle,
 	getPostContents,
 	cachePostContents,
 	getPostList,
+	getIndex,
 }

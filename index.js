@@ -39,16 +39,13 @@ app.get(['/about', '/about.html'], (req, res) => {
 app.get('/posts/:slug', (req, res) => {
 	// Check if that post exists and determine its position within the list of posts.
 	let posts = cache.get('posts');
-	let index = -1;
-	for (var i=0; i < posts.length; i++){
-		if (posts[i].slug === req.params.slug){
-			index = i;
-			break;
-		}
-	}
+	let index = helpers.getIndex(req.params.slug, posts);
 	if (index < 0){
-		res.status(404).render('index', {config, posts, pageTitle: 'Not found', content: {include: 'not_found'}});
-		return;
+		index = helpers.getIndex(req.params.slug.slice(0, req.params.slug.lastIndexOf('.')), posts);
+		if (index < 0){
+			res.status(404).render('index', {config, posts, pageTitle: 'Not found', content: {include: 'not_found'}});
+			return;
+		}
 	}
 
 	// Fetch the post body from cache.
