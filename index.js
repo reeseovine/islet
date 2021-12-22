@@ -41,11 +41,15 @@ app.get('/posts/:slug', (req, res) => {
 	let posts = cache.get('posts');
 	let index = helpers.getIndex(req.params.slug, posts);
 	if (index < 0){
-		index = helpers.getIndex(req.params.slug.slice(0, req.params.slug.lastIndexOf('.')), posts);
-		if (index < 0){
+		let slicedSlug = req.params.slug.slice(0, req.params.slug.lastIndexOf('.'));
+		let indexOfSlicedSlug = helpers.getIndex(slicedSlug, posts);
+		if (indexOfSlicedSlug >= 0){
+			// If you included a file extension for some reason, redirect to the URL without it.
+			res.redirect(301, '/posts/'+slicedSlug);
+		} else {
 			res.status(404).render('index', {config, posts, pageTitle: 'Not found', content: {include: 'not_found'}});
-			return;
 		}
+		return;
 	}
 
 	// Fetch the post body from cache.
