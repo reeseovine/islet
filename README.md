@@ -1,5 +1,7 @@
 # islet 🌴
 
+<img src="logo/logo-48.png" alt="islet logo" align="right">
+
 Tiny blogging server. Express.js-based fork of [Zonelets](https://zonelets.net/).
 
 All themes from the Zonelet theme pack v1.1 are included (license CC0). Islet aims to be 100% compatible with themes made for Zonelets!
