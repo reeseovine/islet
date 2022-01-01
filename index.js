@@ -54,8 +54,9 @@ app.get('/posts/:slug', (req, res) => {
 
 	// Fetch the post body from cache.
 	let body = helpers.cachePostContents(posts[index].file, cache);
+	let summary = helpers.getPostSummary(body, config.truncateSummaryAt);
 	// Make an object that includes the post's metadata, index, and body, then render the page with it.
-	let postData = Object.assign(posts[index], {index, body});
+	let postData = Object.assign(posts[index], {index, body, summary});
 	res.render('index', {config, posts, pageTitle: postData.title, content: {include: 'post', data: postData}});
 });
 

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const marked = require('marked');
+const decode = require('html-entities').decode;
 
 let postDateFormat = /^\d{4}\-\d{2}\-\d{2}\-?/;
 
@@ -72,6 +73,18 @@ let cachePostContents = (file, cache) => {
 	return body;
 }
 
+let getPostSummary = (contents, truncateAt) => {
+	// Take post contents -> Remove HTML tags -> Remove blank lines -> Remove spaces from start and end of each line -> Decode HTML encoded symbols -> Join lines with 2 spaces in between
+	let text = contents.replace(/<[^>]+>/g, '').split('\n').filter(line => line.length > 0).map(line => decode(line.replace(/(^\s+|\s+$)/g, ''))).join('  ');
+
+	// Cut length if needed and add ellipsis (280 characters total or whatever you specify in the config)
+	truncateAt = truncateAt || 280
+	if (text.length > truncateAt-3){
+		return text.slice(0, truncateAt-3) + '...';
+	}
+	return text;
+}
+
 let getPostList = () => {
 	let files = fs.readdirSync('posts').reverse();
 	let posts = [];
@@ -106,6 +119,7 @@ module.exports = {
 	getPostTitle,
 	getPostContents,
 	cachePostContents,
+	getPostSummary,
 	getPostList,
 	getIndex,
 }

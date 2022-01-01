@@ -7,7 +7,11 @@
 			<%= config.blogName %>
 		<%_ } %></title>
 		<meta name="author" content="<%= config.authorName %>">
-		<meta name="description" content="<%= config.metaDescription %>">
+		<% if (locals.content.data){ _%>
+			<meta name="description" content="<%= content.data.summary %>">
+		<% } else if (locals.config.metaDescription){ %>
+			<meta name="description" content="<%= config.metaDescription %>">
+		<%_ } %>
 		<!-- This specifies the favicon (little icon on the browser tab) -->
 		<link rel="icon" href="/images/favicon.png" type="image/x-icon"/>
 		<!-- This helps our site look consistent across devices -->
