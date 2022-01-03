@@ -1,0 +1,183 @@
+/* This theme was made by reese! */
+
+:root {
+	--window-trim: inset -2px -2px #959595, inset 2px 2px #e8eeee, inset -4px -4px #c0c0c0, inset 4px 4px #c0c0c0;
+}
+
+body {
+	background-color: #86c5d2;
+	/* Image credit: Jcob Nasyr on unsplash (https://unsplash.com/photos/ppMxyOhPtd8) */
+	background-image: url("../images/bg_neptune.jpg");
+	background-position: center;
+	background-size: cover;
+	background-attachment: fixed;
+	margin: 0;
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.right {
+	float: right;
+	margin-left: 1em;
+}
+
+.left {
+	float: left;
+	margin-right: 1em;
+}
+
+.center {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+}
+
+@media only screen and (min-width: 600px) {
+	.small {
+		max-width: 60%;
+		height: auto;
+	}
+}
+/* #CONTAINER is the rectangle that contains everything but the background! */
+#container {
+	width: 90%;
+	max-width: 700px;
+	margin: 3em auto;
+}
+
+/* HEADER STYLE */
+#header {
+	margin: 2em 0;
+	padding: 36px 16px 16px;
+	background-color: #fff;
+	box-shadow: var(--window-trim);
+	border-radius: 2px;
+	position: relative;
+}
+#header:before {
+	display: block;
+	content: " ";
+	height: 20px;
+	position: absolute;
+	top: 2px; left: 2px; right: 2px;
+	z-index: 10;
+	background-image: linear-gradient(90deg, #109ef6 0%, #59d9fb 100%);
+	border-bottom: 2px solid #c0c0c0;
+}
+#header ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+#header li {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+/* CONTENT */
+#content {
+	margin: 2em 0;
+	padding: 36px 16px 16px;
+	background-color: #fff;
+	box-shadow: var(--window-trim);
+	border-radius: 2px;
+	position: relative;
+}
+#content:before {
+	display: block;
+	content: " ";
+	height: 20px;
+	position: absolute;
+	top: 2px; left: 2px; right: 2px;
+	z-index: 10;
+	background-image: linear-gradient(90deg, #109ef6 0%, #59d9fb 100%);
+	border-bottom: 2px solid #c0c0c0;
+}
+
+h1 { font-size: 2.5em; margin: 0.4em 0; }
+h2 { font-size: 2em; margin: 0.3em 0; }
+h3 { font-size: 1.5em; margin: 0.25em 0; }
+h4 { font-size: 1.15em; margin: 0.2em 0; }
+h5 { font-size: 1em; margin: 0.15em 0; }
+h6 { font-size: 0.9em; margin: 0.125em 0; }
+
+table, th, td {
+	border: 1px solid #666;
+	border-collapse: collapse;
+}
+th, td {
+	padding: 0.25em;
+}
+
+/* POST LIST STYLE */
+#postlistdiv ul {
+	font-size: 1.2em;
+	padding: 0;
+	list-style-type: none;
+}
+
+#recentpostlistdiv ul {
+	font-size: 1.2em;
+	padding: 0;
+	list-style-type: none;
+}
+
+.moreposts {
+	font-size: 0.8em;
+	margin-top: 0.2em;
+}
+
+/*NEXT AND PREVIOUS LINKS STYLE*/
+#nextprev {
+	text-align: center;
+	margin: 1.4em 0;
+	color: transparent;
+}
+#nextprev a {
+	color: #000;
+	text-decoration: none;
+	font-size: 1em;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+/*DISQUS STYLE*/
+#disqus_thread {
+	margin-top: 1.6em;
+}
+
+/*FOOTER STYLE*/
+#footer {
+	margin: 2em 0;
+	padding: 36px 16px 16px;
+	background-color: #fff;
+	box-shadow: var(--window-trim);
+	border-radius: 2px;
+	position: relative;
+	font-size: 14px;
+}
+#footer:before {
+	display: block;
+	content: " ";
+	height: 20px;
+	position: absolute;
+	top: 2px; left: 2px; right: 2px;
+	z-index: 10;
+	background-image: linear-gradient(90deg, #109ef6 0%, #59d9fb 100%);
+	border-bottom: 2px solid #c0c0c0;
+}
+#footer hr {
+	display: none;
+}
+#footer p {
+	width: 100%;
+	margin: 0;
+}

@@ -5,7 +5,7 @@ module.exports = {
 	authorLink: "", // Enter your website, social media, etc. Some way for people to tell you they like your blog! (Leaving it empty is okay too)
 
 	/* === Theme customization === */
-	themeURL: "/style/style.css", // Link to a theme file. Can be relative (on this server) or absolute (somewhere on the web)
+	themeURL: "/style/neptune.css", // Link to a theme file. Can be relative (on this server) or absolute (somewhere on the web)
 	backgroundImage: "", // Optional, uses theme default if left blank.
 
 	/* === Navigation === */
