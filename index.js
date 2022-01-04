@@ -1,6 +1,3 @@
-const config = require('./config.js'); // User-defined config variables. You should edit this file first!
-const helpers = require('./helpers.js');
-
 const SimpleCache = require('./cache.js');
 const cache = new SimpleCache();
 
@@ -14,6 +11,9 @@ let postWatcher = chokidar.watch('posts/*', {ignoreInitial: true}).on('all', (ev
 postWatcher.on('ready', () => {
 	cache.set('posts', helpers.getPostList());
 });
+
+const config = require('./config.js').init();
+const helpers = require('./helpers.js');
 
 const express = require('express');
 const app = express();

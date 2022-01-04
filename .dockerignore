@@ -1,0 +1,9 @@
+.github/
+logo/
+node_modules/
+.editorconfig
+.gitignore
+Dockerfile
+LICENSE
+README.md
+*.log
