@@ -1,0 +1,17 @@
+blogName: Islet.surf
+authorName: Reese Sapphire
+authorLink: https://github.com/katacarbix
+themeURL: /style/neptune.css
+headerLinks:
+  - path: /
+    name: Home
+  - path: /archive
+    name: Archive
+  - path: /about
+    name: About
+recentPostsCutoff: 10
+serverPort: 5000
+metaDescription: Islet is a tiny blogging server designed to encourage creative fun on the internet!
+truncateSummaryAt: 280
+language: en-US
+blogURL: https://islet.surf

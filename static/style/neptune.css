@@ -56,11 +56,26 @@ img {
 /* HEADER STYLE */
 #header {
 	margin: 2em 0;
-	padding: 36px 16px 16px;
+	padding: 36px 80px 16px 16px;
 	background-color: #fff;
 	box-shadow: var(--window-trim);
 	border-radius: 2px;
 	position: relative;
+	font-size: 1.2em;
+}
+#header:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+	z-index: 20;
+    background-image: url('/images/logo-frameless.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    width: 64px;
+    height: calc(100% - 20px);
+    overflow: hidden;
 }
 #header:before {
 	display: block;
@@ -109,6 +124,9 @@ h4 { font-size: 1.15em; margin: 0.2em 0; }
 h5 { font-size: 1em; margin: 0.15em 0; }
 h6 { font-size: 0.9em; margin: 0.125em 0; }
 
+table, figure {
+	width: 100%;
+}
 table, th, td {
 	border: 1px solid #666;
 	border-collapse: collapse;
@@ -138,15 +156,8 @@ th, td {
 /*NEXT AND PREVIOUS LINKS STYLE*/
 #nextprev {
 	text-align: center;
-	margin: 1.4em 0;
+	margin: 1.5em 0;
 	color: transparent;
-}
-#nextprev a {
-	color: #000;
-	text-decoration: none;
-	font-size: 1em;
-	padding-top: 3px;
-	padding-bottom: 3px;
 }
 
 /*DISQUS STYLE*/
