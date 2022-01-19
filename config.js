@@ -50,9 +50,9 @@ let defaultStructure = [
 				key: "headerLinks",
 				envKey: "HEADER_LINKS",
 				value: [
-					{path: "/", name: "Home"},
-					{path: "/archive", name: "Archive"},
-					{path: "/about", name: "About"}
+					{name: "Home", path: "/"},
+					{name: "Archive", path: "/archive"},
+					{name: "About", path: "/about"}
 				]
 			},{
 				key: "recentPostsCutoff",

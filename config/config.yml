@@ -3,12 +3,18 @@ authorName: Reese Sapphire
 authorLink: https://github.com/katacarbix
 themeURL: /style/neptune.css
 headerLinks:
-  - path: /
-    name: Home
-  - path: /archive
-    name: Archive
-  - path: /about
-    name: About
+  - name: Home
+    path: /
+  - name: Quick start
+    path: /posts/2022-01-15-Getting-started.md
+  - name: FAQ
+    path: /posts/2022-01-12-FAQ.md
+  - name: Themes
+    path: /posts/2022-01-15-Themes.md
+  - name: Archive
+    path: /archive
+  - name: About
+    path: /about
 recentPostsCutoff: 10
 serverPort: 5000
 metaDescription: Islet is a tiny blogging server designed to encourage creative fun on the internet!
