@@ -1,3 +1,10 @@
+const express = require('express');
+const app = express();
+
+const config = require('./config.js').init();
+app.locals.config = config;
+
+const helpers = require('./helpers.js');
 const SimpleCache = require('./cache.js');
 const cache = new SimpleCache();
 
@@ -12,11 +19,6 @@ postWatcher.on('ready', () => {
 	cache.set('posts', helpers.getPostList());
 });
 
-const config = require('./config.js').init();
-const helpers = require('./helpers.js');
-
-const express = require('express');
-const app = express();
 
 app.set('views', './templates');
 app.set('view engine', 'ejs');
@@ -26,13 +28,13 @@ app.use('/', express.static('static'));
 
 // Main pages
 app.get(['/', '/index.html'], (req, res) => {
-	res.render('index', {config, posts: cache.get('posts'), pageTitle: 'Home', content: {include: 'home'}});
+	res.render('index', {posts: cache.get('posts'), pageTitle: 'Home', content: {include: 'home'}});
 });
 app.get(['/archive', '/archive.html'], (req, res) => {
-	res.render('index', {config, posts: cache.get('posts'), pageTitle: 'Archive', content: {include: 'archive'}});
+	res.render('index', {posts: cache.get('posts'), pageTitle: 'Archive', content: {include: 'archive'}});
 });
 app.get(['/about', '/about.html'], (req, res) => {
-	res.render('index', {config, posts: cache.get('posts'), pageTitle: 'About', content: {include: 'about'}});
+	res.render('index', {posts: cache.get('posts'), pageTitle: 'About', content: {include: 'about'}});
 });
 
 // A blog post
@@ -47,7 +49,7 @@ app.get('/posts/:slug', (req, res) => {
 			// If you included a file extension for some reason, redirect to the URL without it.
 			res.redirect(301, '/posts/'+slicedSlug);
 		} else {
-			res.status(404).render('index', {config, posts, pageTitle: 'Not found', content: {include: 'not_found'}});
+			res.status(404).render('index', {posts, pageTitle: 'Not found', content: {include: 'not_found'}});
 		}
 		return;
 	}
@@ -57,7 +59,7 @@ app.get('/posts/:slug', (req, res) => {
 	let summary = helpers.getPostSummary(body, config.truncateSummaryAt);
 	// Make an object that includes the post's metadata, index, and body, then render the page with it.
 	let postData = Object.assign(posts[index], {index, body, summary});
-	res.render('index', {config, posts, pageTitle: postData.title, content: {include: 'post', data: postData}});
+	res.render('index', {posts, pageTitle: postData.title, content: {include: 'post', data: postData}});
 });
 
 // RSS feed
@@ -70,12 +72,12 @@ app.get('/feed.rss', (req, res) => {
 	}
 
 	res.set('Content-Type', 'application/xml');
-	res.render('feed', {config, posts: postsExtended});
+	res.render('feed', {posts: postsExtended});
 });
 
 // 404 not found!
 app.get('*', (req, res) => {
-	res.status(404).render('index', {config, posts: cache.get('posts'), pageTitle: 'Not found', content: {include: 'not_found'}});
+	res.status(404).render('index', {posts: cache.get('posts'), pageTitle: 'Not found', content: {include: 'not_found'}});
 });
 
 

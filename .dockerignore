@@ -1,6 +1,8 @@
 .github/
+config/
 logo/
 node_modules/
+posts/
 .editorconfig
 .gitignore
 Dockerfile

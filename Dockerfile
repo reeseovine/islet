@@ -1,16 +1,17 @@
 FROM node:lts-alpine
 
 # Create volumes before copying files
-WORKDIR /app
 VOLUME /app/posts
 VOLUME /app/static
 VOLUME /app/config
 
 # Copy source code
-ADD . /app
+WORKDIR /app
+ADD . .
 
 # Install dependencies
-RUN yarn install
+RUN npm --verbose ci --omit=dev
 
 # Start your blog!
-CMD yarn start
+CMD npm start
+EXPOSE 5000

@@ -6,7 +6,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon index.js",
-    "build": "echo \"Static build feature does not exist yet\" && exit 1",
     "start": "node index.js"
   },
   "dependencies": {
