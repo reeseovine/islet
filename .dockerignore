@@ -1,5 +1,6 @@
 .github/
 config/
+dist/
 logo/
 node_modules/
 posts/

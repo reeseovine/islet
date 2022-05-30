@@ -5,19 +5,31 @@
   "author": "Reese Sapphire <reese@ovine.xyz>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "build": "node src/render.js",
+    "serve": "http-server ./dist"
   },
   "dependencies": {
     "chokidar": "^3.5.2",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "fs-extra": "^10.1.0",
     "html-entities": "^2.3.2",
+    "http-server": "^14.1.0",
     "marked": "^4.0.7",
+    "node-fetch": "^2.6.7",
     "yaml": "^1.10.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "quoteProps": "consistent"
   }
 }

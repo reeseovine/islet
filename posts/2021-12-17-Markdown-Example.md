@@ -1,3 +1,10 @@
+---
+title: Markdown example!
+summary: Here's a Markdown example to show you how it works.
+publishDate: 2021-12-17
+editDate: 2022-05-10
+---
+
 This is an example of a blog post written in **_Markdown_**!
 
 Now you can use formatting that:
@@ -12,10 +19,9 @@ Now you can use formatting that:
 
 Here's an example of a table:
 
-| Hello                                                          | World                                                  |
-|:---------------------------------------------------------------|:-------------------------------------------------------|
-| The dashes above mean that the previous row is a table header. | As long as there are at least 3 dashes in each column! |
-| Tables don't have to be evenly spaced in code.                 | But it does make them easier to read!                  |
-
+| Hello                      | World!                           | Table                         | Example                  |
+|:---------------------------|:---------------------------------|:------------------------------|:-------------------------|
+| The dashes above mean that | the first row is a table header, | as long as there are at least | 3 dashes in each column. |
+| Tables don't have to be    | evenly spaced in code,           | but it does make them         | easier to read!          |
 
 Learn more about how to use Markdown [here](https://www.markdownguide.org/getting-started/).

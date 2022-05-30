@@ -117,12 +117,12 @@ let generateYamlConfig = () => {
 }
 
 let makeConfigFile = () => {
-	if (fs.existsSync('./config/config.yml')){
+	if (fs.existsSync('../config/config.yml')){
 		return;
 	}
 
 	try { // Create the config folder if it doesn't exist
-		fs.mkdirSync('./config');
+		fs.mkdirSync('../config');
 	} catch (e){
 		if (e.code !== "EEXIST"){
 			console.error("Error when trying to create the config folder:");
@@ -132,8 +132,8 @@ let makeConfigFile = () => {
 	}
 	let config = generateYamlConfig();
 	try { // Now create the config file
-		if (!fs.existsSync('./config/config.yml')){
-			fs.writeFileSync('./config/config.yml', config);
+		if (!fs.existsSync('../config/config.yml')){
+			fs.writeFileSync('../config/config.yml', config);
 		}
 	} catch (e){
 		console.error("Error when trying to create the config file:");
@@ -143,7 +143,7 @@ let makeConfigFile = () => {
 
 let readUserConfig = () => {
 	try {
-		return YAML.parse(fs.readFileSync('./config/config.yml', 'utf8'));
+		return YAML.parse(fs.readFileSync('../config/config.yml', 'utf8'));
 	} catch (e){
 		console.error("Error when trying to read the config file:");
 		console.error(e);
