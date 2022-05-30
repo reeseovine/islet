@@ -77,6 +77,9 @@ let main = async () => {
 		}
 	}
 
+	// render 404 page
+	await render(app, '/404', '404')
+
 	// copy everything inside static/ to dist/
 	await fsx.copy('static/', 'dist/')
 	console.log(`copied:  static/*  ->  dist/`)
