@@ -2,7 +2,6 @@ FROM node:lts-alpine
 
 # Create volumes before copying files
 VOLUME /app/posts
-VOLUME /app/static
 VOLUME /app/config
 
 # Copy source code
